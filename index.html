@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pressed For Time">
+<meta name="application-name" content="Pressed For Time">
+<meta name="theme-color" content="#1D9E75">
+<title>Pressed For Time</title>
+<link rel="manifest" href="data:application/json,{%22name%22:%22Pressed%20For%20Time%22,%22short_name%22:%22P4T%22,%22display%22:%22standalone%22,%22background_color%22:%22%231D9E75%22,%22theme_color%22:%22%231D9E75%22}">
+<script>
+(function(){
+  var c=document.createElement('canvas');
+  c.width=512;c.height=512;
+  var ctx=c.getContext('2d');
+  var r=80;
+  var w=512,h=512;
+  // rounded rect background
+  ctx.beginPath();
+  ctx.moveTo(r,0);ctx.lineTo(w-r,0);ctx.quadraticCurveTo(w,0,w,r);
+  ctx.lineTo(w,h-r);ctx.quadraticCurveTo(w,h,w-r,h);
+  ctx.lineTo(r,h);ctx.quadraticCurveTo(0,h,0,h-r);
+  ctx.lineTo(0,r);ctx.quadraticCurveTo(0,0,r,0);
+  ctx.closePath();
+  ctx.fillStyle='#1D9E75';ctx.fill();
+  ctx.fillStyle='rgba(0,0,0,0.15)';
+  ctx.fillRect(r,0,w-2*r,80);
+  ctx.fillStyle='rgba(0,0,0,0.15)';
+  ctx.beginPath();
+  ctx.moveTo(r,0);ctx.lineTo(w-r,0);ctx.quadraticCurveTo(w,0,w,r);
+  ctx.lineTo(w,80);ctx.lineTo(0,80);ctx.lineTo(0,r);ctx.quadraticCurveTo(0,0,r,0);
+  ctx.closePath();
+  ctx.fill();
+  function drawDumbbell(yCenter){
+    ctx.fillStyle='#ffffff';
+    // left plate
+    ctx.beginPath();ctx.roundRect(58,yCenter-52,52,104,10);ctx.fill();
+    // left plate slots
+    ctx.fillStyle='#1D9E75';
+    ctx.beginPath();ctx.roundRect(68,yCenter-44,12,88,4);ctx.fill();
+    ctx.beginPath();ctx.roundRect(86,yCenter-44,12,88,4);ctx.fill();
+    ctx.fillStyle='#ffffff';
+    // left collar
+    ctx.beginPath();ctx.roundRect(110,yCenter-36,28,72,6);ctx.fill();
+    // bar
+    ctx.beginPath();ctx.roundRect(138,yCenter-20,236,40,20);ctx.fill();
+    // right collar
+    ctx.beginPath();ctx.roundRect(374,yCenter-36,28,72,6);ctx.fill();
+    // right plate
+    ctx.fillStyle='#ffffff';
+    ctx.beginPath();ctx.roundRect(402,yCenter-52,52,104,10);ctx.fill();
+    ctx.fillStyle='#1D9E75';
+    ctx.beginPath();ctx.roundRect(412,yCenter-44,12,88,4);ctx.fill();
+    ctx.beginPath();ctx.roundRect(430,yCenter-44,12,88,4);ctx.fill();
+  }
+  drawDumbbell(116);
+  drawDumbbell(396);
+  // P4T text
+  ctx.fillStyle='#ffffff';
+  ctx.font='900 210px "Arial Black","Impact","Franklin Gothic Heavy",Arial,sans-serif';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillText('P4T',256,256);
+  var dataURL=c.toDataURL('image/png');
+  var link=document.createElement('link');
+  link.rel='icon';link.type='image/png';link.href=dataURL;
+  document.head.appendChild(link);
+  var alink=document.createElement('link');
+  alink.rel='apple-touch-icon';alink.href=dataURL;
+  document.head.appendChild(alink);
+})();
+</script>
+<style>
+:root {
+  --accent:#1D9E75;--accent-light:#E1F5EE;--accent-mid:#0F6E56;
+  --orange:#BA7517;--orange-light:#FAEEDA;--orange-border:#FAC775;
+  --blue:#185FA5;--blue-light:#E6F1FB;--blue-border:#B5D4F4;
+  --red:#A32D2D;--red-light:#FCEBEB;
+  --bg:#ffffff;--bg2:#f5f5f3;--bg3:#eeede8;
+  --text:#1a1a18;--text2:#5f5e5a;--text3:#888780;
+  --border:rgba(0,0,0,0.12);--border2:rgba(0,0,0,0.18);
+  --radius:8px;--radius-lg:12px;
+}
+@media(prefers-color-scheme:dark){
+  :root{
+    --bg:#1a1a18;--bg2:#242422;--bg3:#2c2c2a;
+    --text:#f0efe8;--text2:#b4b2a9;--text3:#888780;
+    --border:rgba(255,255,255,0.12);--border2:rgba(255,255,255,0.2);
+    --accent-light:#063d2c;--accent-mid:#5DCAA5;
+    --orange-light:#2d1e04;--orange:#EF9F27;--orange-border:#633806;
+    --blue-light:#042c53;--blue:#85B7EB;--blue-border:#0C447C;
+    --red-light:#2d0a0a;--red:#F09595;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg3);color:var(--text);min-height:100vh;font-size:16px;}
+.app-header{background:var(--bg);border-bottom:0.5px solid var(--border);padding:16px 20px 12px;position:sticky;top:0;z-index:100;}
+.app-header h1{font-size:18px;font-weight:600;}
+.app-header p{font-size:12px;color:var(--text3);margin-top:2px;}
+.container{max-width:680px;margin:0 auto;padding:16px;}
+.science-bar{background:var(--bg);border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:16px;border:0.5px solid var(--border);}
+.science-bar h3{font-size:13px;font-weight:600;margin-bottom:10px;}
+.science-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.s-pill{font-size:11px;padding:3px 9px;border-radius:999px;border:0.5px solid var(--border2);color:var(--text2);background:var(--bg2);}
+.split-tabs{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.split-tabs::-webkit-scrollbar{display:none;}
+.tab-btn{padding:8px 14px;border-radius:var(--radius);border:0.5px solid var(--border2);background:var(--bg);color:var(--text2);cursor:pointer;font-size:12px;font-weight:500;white-space:nowrap;-webkit-tap-highlight-color:transparent;transition:all 0.15s;font-family:inherit;}
+.tab-btn.active{background:var(--accent);color:white;border-color:var(--accent);}
+.split-view{display:none;}
+.split-view.active{display:block;}
+.split-header{background:var(--bg);border-radius:var(--radius-lg);padding:14px 16px;margin-bottom:14px;border:0.5px solid var(--border);}
+.split-header h2{font-size:16px;font-weight:600;margin-bottom:4px;}
+.split-header p{font-size:13px;color:var(--text2);line-height:1.5;}
+.week-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:16px;}
+.day-pill{padding:10px 8px;border-radius:var(--radius);border:0.5px solid var(--border);background:var(--bg);cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent;transition:all 0.15s;}
+.day-pill.active{border-color:var(--accent);background:var(--accent-light);}
+.day-pill .day-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;}
+.day-pill .day-name{font-size:12px;font-weight:600;color:var(--text);margin-top:3px;}
+.day-pill.active .day-name{color:var(--accent-mid);}
+.day-view{display:none;}
+.day-view.active{display:block;}
+.floor-section{margin-bottom:14px;}
+.floor-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:var(--radius);font-size:11px;font-weight:600;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.04em;}
+.floor-badge.bottom{background:var(--blue-light);color:var(--blue);border:0.5px solid var(--blue-border);}
+.floor-badge.top{background:var(--orange-light);color:var(--orange);border:0.5px solid var(--orange-border);}
+.floor-badge.warmup{background:var(--red-light);color:var(--red);border:0.5px solid #F7C1C1;}
+.cardio-card{background:var(--bg);border-radius:var(--radius);padding:10px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;border:0.5px solid var(--border);}
+.c-title{font-size:14px;font-weight:500;}
+.c-sub{font-size:12px;color:var(--text2);margin-top:2px;line-height:1.4;}
+.exercise-card{background:var(--bg);border:0.5px solid var(--border);border-radius:var(--radius-lg);margin-bottom:8px;overflow:hidden;}
+.exercise-header{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;gap:10px;-webkit-tap-highlight-color:transparent;}
+.exercise-header:active{background:var(--bg2);}
+.ex-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+.ex-num{width:26px;height:26px;border-radius:50%;background:var(--accent-light);color:var(--accent-mid);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ex-name{font-size:14px;font-weight:600;color:var(--text);line-height:1.3;}
+.ex-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:3px;}
+.tag{font-size:11px;padding:2px 7px;border-radius:999px;border:0.5px solid var(--border);color:var(--text3);background:var(--bg2);}
+.ex-meta{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+.meta-pill{font-size:11px;padding:3px 8px;border-radius:var(--radius);background:var(--bg2);color:var(--text2);white-space:nowrap;}
+.meta-pill.sets{background:var(--accent-light);color:var(--accent-mid);}
+.chevron{font-size:10px;color:var(--text3);transition:transform 0.2s;margin-top:2px;}
+.chevron.open{transform:rotate(180deg);}
+.exercise-detail{display:none;padding:0 14px 14px;border-top:0.5px solid var(--border);}
+.exercise-detail.open{display:block;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;}
+.detail-box{background:var(--bg2);border-radius:var(--radius);padding:10px 12px;}
+.detail-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;font-weight:600;}
+.detail-value{font-size:13px;color:var(--text);line-height:1.5;}
+.weight-row{display:flex;align-items:center;gap:8px;}
+.weight-input{font-size:14px;font-weight:600;color:var(--accent-mid);background:transparent;border:none;border-bottom:1.5px solid var(--accent);outline:none;width:100px;padding:2px 4px;font-family:inherit;}
+.weight-input:focus{background:var(--accent-light);border-radius:4px 4px 0 0;}
+.weight-saved{font-size:11px;color:var(--accent);opacity:0;transition:opacity 0.4s;}
+.weight-saved.show{opacity:1;}
+.tip-box{margin-top:10px;padding:10px 12px;background:var(--accent-light);border-radius:var(--radius);border-left:3px solid var(--accent);}
+.tip-label{font-size:10px;font-weight:600;color:var(--accent-mid);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;}
+.tip-text,.info-text{font-size:13px;color:var(--text);line-height:1.6;word-break:break-word;white-space:normal;}
+.wait-box{margin-top:8px;padding:10px 12px;background:var(--orange-light);border-radius:var(--radius);border-left:3px solid var(--orange);}
+.wait-label{font-size:10px;font-weight:600;color:var(--orange);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px;}
+.wait-text{font-size:13px;color:var(--text);line-height:1.5;}
+.bottom-spacer{height:40px;}
+
+/* ── Add Exercise ── */
+.add-ex-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border-radius:var(--radius-lg);border:1.5px dashed var(--border2);background:transparent;color:var(--text3);cursor:pointer;font-size:13px;font-weight:500;font-family:inherit;margin-top:4px;margin-bottom:16px;transition:all 0.15s;}
+.add-ex-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+.add-ex-btn .plus{font-size:18px;line-height:1;}
+
+/* overlay */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;align-items:flex-end;justify-content:center;}
+.modal-overlay.open{display:flex;}
+@media(min-width:520px){.modal-overlay.open{align-items:center;}}
+.modal{background:var(--bg);border-radius:var(--radius-lg) var(--radius-lg) 0 0;width:100%;max-width:540px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;}
+@media(min-width:520px){.modal{border-radius:var(--radius-lg);}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 0;}
+.modal-header h3{font-size:15px;font-weight:600;}
+.modal-close{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text3);line-height:1;padding:4px;font-family:inherit;}
+.modal-tabs{display:flex;gap:0;padding:12px 18px 0;border-bottom:0.5px solid var(--border);}
+.modal-tab{padding:8px 14px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text3);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:inherit;transition:all 0.15s;}
+.modal-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.modal-body{padding:16px 18px;overflow-y:auto;flex:1;}
+
+/* new exercise form */
+.form-row{margin-bottom:12px;}
+.form-label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:5px;display:block;}
+.form-input{width:100%;padding:9px 11px;border-radius:var(--radius);border:0.5px solid var(--border2);background:var(--bg2);color:var(--text);font-size:13px;font-family:inherit;outline:none;}
+.form-input:focus{border-color:var(--accent);background:var(--accent-light);}
+.form-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.form-select{width:100%;padding:9px 11px;border-radius:var(--radius);border:0.5px solid var(--border2);background:var(--bg2);color:var(--text);font-size:13px;font-family:inherit;outline:none;cursor:pointer;}
+.form-select:focus{border-color:var(--accent);}
+.modal-save-btn{width:100%;padding:12px;border-radius:var(--radius);background:var(--accent);color:white;border:none;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:4px;transition:opacity 0.15s;}
+.modal-save-btn:hover{opacity:0.88;}
+
+/* copy-from browser */
+.copy-filter-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;}
+.copy-select{flex:1;min-width:120px;padding:8px 10px;border-radius:var(--radius);border:0.5px solid var(--border2);background:var(--bg2);color:var(--text);font-size:12px;font-family:inherit;outline:none;}
+.copy-ex-list{display:flex;flex-direction:column;gap:6px;}
+.copy-ex-item{background:var(--bg2);border-radius:var(--radius);padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;border:0.5px solid var(--border);}
+.copy-ex-item .cei-name{font-size:13px;font-weight:500;color:var(--text);}
+.copy-ex-item .cei-meta{font-size:11px;color:var(--text3);margin-top:2px;}
+.copy-btn{padding:5px 12px;border-radius:var(--radius);background:var(--accent-light);color:var(--accent-mid);border:0.5px solid var(--accent);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;flex-shrink:0;}
+.copy-btn:hover{background:var(--accent);color:white;}
+
+/* custom exercise card extras */
+.ex-card-custom{border-left:3px solid var(--accent);}
+.ex-delete-btn{padding:4px 10px;border-radius:var(--radius);background:var(--red-light);color:var(--red);border:0.5px solid #F7C1C1;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:10px;}
+.ex-delete-btn:hover{background:var(--red);color:white;}
+</style>
+</head>
+<body>
+<div class="app-header">
+  <h1>Pressed For Time</h1>
+  <p>5 days/week &middot; 3 split options &middot; tap exercise to expand &middot; weights auto-save</p>
+</div>
+<div class="container">
+  <div class="science-bar">
+    <h3>Hypertrophy principles applied to all plans</h3>
+    <div class="science-pills">
+      <span class="s-pill">10–20 sets/muscle/week</span>
+      <span class="s-pill">6–12 rep sweet spot</span>
+      <span class="s-pill">60–90s rest</span>
+      <span class="s-pill">2 RIR (reps in reserve)</span>
+      <span class="s-pill">Compound lifts first</span>
+      <span class="s-pill">Progressive overload weekly</span>
+      <span class="s-pill">HIIT cardio for fat loss</span>
+      <span class="s-pill">Mind-muscle connection</span>
+    </div>
+  </div>
+  <div class="split-tabs">
+    <button class="tab-btn active" onclick="showSplit(0)">Split 1 — PPL</button>
+    <button class="tab-btn" onclick="showSplit(1)">Split 2 — Upper / Lower</button>
+    <button class="tab-btn" onclick="showSplit(2)">Split 3 — Classic Bro</button>
+  </div>
+  <div id="split-0" class="split-view active"></div>
+  <div id="split-1" class="split-view"></div>
+  <div id="split-2" class="split-view"></div>
+  <div class="bottom-spacer"></div>
+</div>
+<style>
+/* ── Editable field shared style ── */
+.editable-field {
+  background: transparent; border: none; border-bottom: 1.5px solid var(--border2);
+  color: var(--text); font-size: 13px; font-family: inherit;
+  outline: none; padding: 2px 4px; width: 100%; border-radius: 0;
+  transition: border-color 0.15s, background 0.15s;
+}
+.editable-field:focus { border-bottom-color: var(--accent); background: var(--accent-light); border-radius: 4px 4px 0 0; }
+.editable-field.inline { width: auto; min-width: 60px; max-width: 120px; }
+.field-saved { font-size: 11px; color: var(--accent); opacity: 0; transition: opacity 0.4s; margin-left: 4px; }
+.field-saved.show { opacity: 1; }
+
+/* ── Editable header pills ── */
+.ex-header-inputs { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.pill-input-wrap { display: flex; align-items: center; gap: 3px; }
+.pill-input {
+  font-size: 11px; padding: 2px 7px; border-radius: var(--radius);
+  background: var(--accent-light); color: var(--accent-mid);
+  border: 0.5px solid var(--accent); outline: none; font-family: inherit;
+  min-width: 55px; max-width: 90px; text-align: center;
+}
+.pill-input.reps { background: var(--bg2); color: var(--text2); border-color: var(--border); }
+.pill-input:focus { outline: 1.5px solid var(--accent); }
+.chevron { font-size: 10px; color: var(--text3); transition: transform 0.2s; margin-top: 2px; flex-shrink: 0; }
+.chevron.open { transform: rotate(180deg); }
+
+/* ── Detail grid (4 cells) ── */
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+.detail-box { background: var(--bg2); border-radius: var(--radius); padding: 10px 12px; }
+.detail-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; font-weight: 600; }
+
+/* ── Floor selector ── */
+.floor-select {
+  width: 100%; padding: 6px 8px; border-radius: var(--radius);
+  border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text);
+  font-size: 12px; font-family: inherit; outline: none; cursor: pointer;
+}
+.floor-select:focus { border-color: var(--accent); }
+
+/* ── Rest timer ── */
+.timer-wrap { display: flex; flex-direction: column; gap: 8px; }
+.timer-display {
+  font-size: 28px; font-weight: 700; text-align: center; letter-spacing: 0.04em;
+  padding: 8px 0 4px; color: var(--text); transition: color 0.3s;
+  font-variant-numeric: tabular-nums;
+}
+.timer-display.over { color: var(--red); }
+.timer-input-row { display: flex; align-items: center; gap: 6px; }
+.timer-set-input {
+  flex: 1; padding: 6px 8px; border-radius: var(--radius);
+  border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text);
+  font-size: 13px; font-family: inherit; outline: none; text-align: center;
+}
+.timer-set-input:focus { border-color: var(--accent); }
+.timer-btn-row { display: flex; gap: 6px; }
+.timer-btn {
+  flex: 1; padding: 9px 0; border-radius: var(--radius);
+  border: 0.5px solid var(--border2); background: var(--bg2); color: var(--text2);
+  font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: all 0.15s; text-align: center;
+}
+.timer-btn.start { background: var(--accent); color: white; border-color: var(--accent); }
+.timer-btn.pause { background: var(--orange-light); color: var(--orange); border-color: var(--orange-border); }
+.timer-btn.reset { background: var(--bg2); color: var(--text3); font-size: 12px; flex: 0 0 64px; }
+.timer-btn:active { opacity: 0.8; }
+
+/* ── Drag to reorder ── */
+.drag-handle {
+  cursor: grab; padding: 4px 6px 4px 2px; color: var(--text3);
+  font-size: 14px; flex-shrink: 0; touch-action: none; user-select: none;
+}
+.drag-handle:active { cursor: grabbing; }
+.exercise-card.dragging { opacity: 0.4; }
+.exercise-card.drag-over { border-top: 2px solid var(--accent); }
+
+/* ── Reorder hint ── */
+.reorder-hint {
+  font-size: 11px; color: var(--text3); text-align: center;
+  padding: 4px 0 8px; display: flex; align-items: center; justify-content: center; gap: 4px;
+}
+/* How-to box */
+.howto-box {
+  margin-top: 10px; padding: 10px 12px;
+  background: var(--blue-light); border-radius: var(--radius);
+  border-left: 3px solid var(--blue);
+}
+.howto-label { font-size: 10px; font-weight: 600; color: var(--blue); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; display:block; }
+
+/* Tip box variants */
+.tip-box { margin-top: 8px; padding: 10px 12px; border-radius: var(--radius); }
+.tip-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; display:block; }
+
+.tip-form { background: var(--accent-light); border-left: 3px solid var(--accent); }
+.tip-form .tip-label { color: var(--accent-mid); }
+
+.tip-timing { background: var(--orange-light); border-left: 3px solid var(--orange); }
+.tip-timing .tip-label { color: var(--orange); }
+
+.tip-hypertrophy { background: var(--red-light); border-left: 3px solid var(--red); }
+.tip-hypertrophy .tip-label { color: var(--red); }
+</style>
+
+<script>
+// FLOOR NOTES:
+//   bottom = 1 bench, kettlebells, DBs 30 lb and under
+//   top    = 5 benches, full DB rack (20 lb+), all machines
+// Each exercise has: how_to, tip_form, tip_timing, tip_hypertrophy, wait
+
+const EXERCISE_INFO = {
+  "Bench press (barbell)": {
+    how_to: "Lie flat on the bench, feet planted on the floor. Grip the bar slightly wider than shoulder-width with a full grip. Unrack and lower the bar in a controlled arc to your lower chest, keeping your elbows at about 75°. Press back up in a slight diagonal path, locking out at the top.",
+    tip_form: "Keep your shoulder blades pinched together and pulled down into the bench throughout the lift — this protects your rotator cuff and creates a stable platform.",
+    tip_timing: "Use a 2-1-1 tempo: 2 seconds down, 1 second pause at the chest, 1 second up. The pause eliminates bounce and forces genuine muscle work.",
+    tip_hypertrophy: "Lowering to your lower chest (not mid-chest) maximizes the pec stretch at the bottom — this stretched-position loading is the primary driver of chest hypertrophy."
+  },
+  "Shoulder press machine": {
+    how_to: "Adjust the seat so the handles are at shoulder height. Grip the handles with palms facing forward. Press straight up until arms are nearly extended, then lower slowly back to the start without letting the weight stack touch down between reps.",
+    tip_form: "Keep your lower back flat against the pad — don't arch. Arching turns this into an upper chest exercise and risks lumbar injury.",
+    tip_timing: "Take 3 full seconds on the way down. The eccentric (lowering) phase is where the most muscle damage — and therefore growth — occurs.",
+    tip_hypertrophy: "Avoid fully locking out at the top so the deltoids stay under constant tension for the entire set. Lockout gives the muscle a rest — don't give it one."
+  },
+  "Incline dumbbell press": {
+    how_to: "Set the bench to 30°. Sit back with a dumbbell in each hand at shoulder height, palms facing forward. Press up and slightly together, then lower the dumbbells past your chest level on the way down to achieve a full stretch at the bottom.",
+    tip_form: "Keep elbows at 75° from your torso — not 90°. Elbows flared out wide shifts stress onto the front delts and shoulder joint instead of the upper chest.",
+    tip_timing: "Pause for 1 second at the bottom of each rep when you feel the stretch in your upper chest. This loaded stretch is where upper pec fibers are maximally recruited.",
+    tip_hypertrophy: "30° is superior to 45° for upper chest development — higher angles shift the load predominantly to the front deltoid, reducing chest stimulus significantly."
+  },
+  "Skull crushers (EZ bar)": {
+    how_to: "Lie on a bench and hold an EZ bar above your chest with arms extended. Keeping your upper arms vertical and elbows pointing at the ceiling, bend at the elbows to lower the bar toward your forehead or just behind your head. Extend back to the start.",
+    tip_form: "Your upper arms must stay completely vertical and stationary throughout — if they drift toward your face, you're turning it into a press and removing the tricep stretch.",
+    tip_timing: "Lower for 3 seconds, pause for 1 second at the bottom near your head, then press up in 1 second. The pause at the stretched position dramatically increases long-head recruitment.",
+    tip_hypertrophy: "The EZ bar's angled grip reduces wrist strain so you can go heavier than with a straight bar — more overload means more tricep mass. The long head (largest head) is only fully stretched when the arm is overhead or near-overhead."
+  },
+  "Cable pec fly": {
+    how_to: "Set both cable pulleys to shoulder height. Stand in the center, grab both handles, step one foot forward for stability. With a slight bend in the elbows, bring your hands together in an arc in front of your chest, squeezing the pecs. Control the return.",
+    tip_form: "Keep the same elbow bend angle throughout — don't let it change as you push or pull. Changing the elbow bend shifts this from a fly (isolation) to a press (compound).",
+    tip_timing: "Hold the peak contraction for 2 full seconds every rep with both handles together. This extended time-under-tension at peak contraction is what cables do better than any other chest exercise.",
+    tip_hypertrophy: "Cross your hands past each other at the peak — right hand past left, alternating — to recruit the inner chest fibers that stopping at center position cannot reach."
+  },
+  "Tricep press machine": {
+    how_to: "Adjust the seat so your elbows line up with the machine's pivot point. Grip the handles with palms facing down. Press down until arms are fully extended, squeezing the triceps hard at the bottom. Return slowly to the start.",
+    tip_form: "Keep your elbows pinned tight to your sides throughout the entire movement — flaring them even slightly shifts tension onto the chest and away from the triceps.",
+    tip_timing: "Squeeze for 1 full second at full extension on every single rep. This isometric at the shortened position of the tricep dramatically increases motor unit recruitment.",
+    tip_hypertrophy: "On your last set, do a drop set — immediately reduce the weight by 25–30% and continue to failure. The extra volume at the end drives significant additional metabolic stress in the tricep."
+  },
+  "Wide grip pull-ups (weighted)": {
+    how_to: "Hang from a bar with hands wider than shoulder-width, palms facing away. Dead-hang from a fully extended position. Drive your elbows down and back — not just pull your hands down — until your chin clears the bar. Lower slowly to a full dead-hang.",
+    tip_form: "Think 'chest to bar' not 'chin over bar.' Aiming for your chest forces proper shoulder depression and scapular retraction, which is the correct mechanics for maximum lat activation.",
+    tip_timing: "Take 3 seconds to lower on every rep. Fighting gravity on the way down creates more muscle damage per rep than the pull-up itself, especially for lat width.",
+    tip_hypertrophy: "The dead-hang at the bottom is non-negotiable — it puts the lats in a fully stretched position, which is the most anabolic point of the movement. Partial reps from the top remove the most important part."
+  },
+  "Zottman curl (dumbbell)": {
+    how_to: "Stand holding dumbbells at your sides, palms facing forward. Curl the weights up with a supinated (palms-up) grip, bringing them to shoulder height. At the top, rotate your wrists so palms face down. Lower the weight slowly in this pronated position. Rotate back to supinated at the bottom and repeat.",
+    tip_form: "Keep your elbows pinned at your sides for the entire movement — no swinging. The upper arm must stay completely still or you're recruiting the front delt instead of the bicep.",
+    tip_timing: "The pronated eccentric (lowering) is the key — take 4 full seconds. This slow lowering under a forearm-biased grip creates maximum brachioradialis overload that you can't replicate any other way.",
+    tip_hypertrophy: "This exercise trains the bicep on the way up AND the brachioradialis and forearm extensors on the way down — effectively two exercises in one, doubling your forearm and arm development per set."
+  },
+  "Chest-stabilized mid row (machine)": {
+    how_to: "Adjust the machine so your chest rests comfortably against the pad. Grab the handles with a neutral or overhand grip at shoulder width. Start with arms extended and shoulders protracted forward. Row the handles toward your chest by driving your elbows back, squeezing your shoulder blades together at the peak.",
+    tip_form: "Let your shoulders fully protract (roll forward) at the start of every rep — don't just start from a neutral position. This full stretch of the mid-back at the beginning doubles the effective range of motion.",
+    tip_timing: "Pause for 1 second at peak contraction with your shoulder blades fully retracted. This isometric hold at the shortened position recruits the deep rhomboids that speed reps miss entirely.",
+    tip_hypertrophy: "The chest pad is an advantage, not a crutch — because it removes lower back involvement, you can go heavier and push harder than any unsupported row, creating more mid-back overload per set."
+  },
+  "Preacher curl machine": {
+    how_to: "Adjust the seat so your upper arms rest fully on the pad with your armpits near the top edge. Grip the handle with an underhand grip. From full extension, curl the weight up toward your face. Lower fully back to extension — don't cut the bottom short.",
+    tip_form: "Your upper arms must stay flat on the pad for the entire set — if they lift off at the top, your front deltoid is finishing the rep instead of the bicep peak you're trying to build.",
+    tip_timing: "On the last rep of each set, hold the arms at a 90° angle (midpoint) for a 5-second isometric. This is where bicep tension is at its absolute maximum — the added hold drives significant extra time-under-tension.",
+    tip_hypertrophy: "The preacher removes all momentum and front-delt cheating — making it the most honest and effective bicep isolation exercise available. Use it when you want pure bicep work with no compensation patterns."
+  },
+  "Back extension (machine)": {
+    how_to: "Adjust the machine so the pad sits just below your hip bones. Hook your feet under the footpads. Start in a hinged position with your torso lowered toward the floor. Initiate the movement by squeezing your glutes first, then extend your torso until your body forms a straight line — don't hyperextend past neutral.",
+    tip_form: "Initiate with your glutes, not your lower back. Most people arch their lumbar hard to rise — this loads the spine, not the muscles. A glute-led initiation shifts the work to where it should be.",
+    tip_timing: "Hold a 1-second isometric at the top of every rep with your body in full extension. This trains the erectors and glutes in their shortened position — the position that's most often undertrained.",
+    tip_hypertrophy: "Cross your arms over your chest to shift the load and increase the moment arm. For more glute emphasis, round your torso slightly at the top — for more erector emphasis, keep a neutral spine throughout."
+  },
+  "Reverse pec fly (machine)": {
+    how_to: "Sit facing the machine's chest pad (or reverse on a pec deck). Adjust handles so your arms are roughly at shoulder height. With a slight bend in the elbows, sweep your arms backward in an arc, squeezing your rear delts at the peak. Control the return slowly.",
+    tip_form: "Lead the movement with your elbows, not your hands. If you lead with your hands you'll use your traps and rhomboids. Leading with the elbow isolates the rear delt specifically.",
+    tip_timing: "Keep the weight light enough that you can perform slow, controlled reps — 2 seconds out, 2 seconds back. Rear delts are small muscles that respond to precision, not load.",
+    tip_hypertrophy: "Rear delts are the most chronically undertrained muscle in most upper body programs. They create the 3D 'capped' shoulder look and are responsible for the shoulder width visible from behind — prioritize them."
+  },
+  "Leg press (machine)": {
+    how_to: "Sit in the machine with your back and head flat against the pad. Place feet shoulder-width apart in the middle of the platform. Lower the weight until your knees reach approximately 90° — or deeper if mobility allows. Press through your heels to return, stopping just before your knees lock out.",
+    tip_form: "Never let your lower back peel off the seat at the bottom of the rep. If it does, your range of motion is too deep for your current hip mobility — reduce depth until you can maintain a flat back.",
+    tip_timing: "Do not lock out the knees at the top — stop 10° short. Locking out unloads the quads completely and puts all force on the knee joint. Keeping a slight bend maintains constant muscular tension.",
+    tip_hypertrophy: "Vary foot position between sets: narrow and low = outer quads, wide and high = inner quads and glutes. This variation across sets hits more total muscle fibers than staying in one position throughout."
+  },
+  "Roman chair leg raise": {
+    how_to: "Mount the Roman chair with your forearms on the pads and your back against the backrest. Let your legs hang fully extended. Lift your knees toward your chest (or keep legs straight for more difficulty), then lower back to full hang under control.",
+    tip_form: "At the top of every rep, posteriorly tilt your pelvis — round your lower back slightly. This is the most important cue: without it, the hip flexors do all the work and your abs do nothing.",
+    tip_timing: "Lower your legs slowly — 3 seconds down. The eccentric is where the rectus abdominis (the '6-pack' muscle) is most active. Fast lowering removes the most valuable part of the exercise.",
+    tip_hypertrophy: "The lower abs (below the navel) are the hardest part of the core to develop and the most visible sign of being lean. Direct leg raise work is the only way to target this region — planks and crunches don't reach it."
+  },
+  "Leg extension (machine)": {
+    how_to: "Sit in the machine with your back flat against the pad and the roller positioned just above your ankles. Grip the handles for stability. Extend your legs until fully straight, squeeze the quads at the top, then lower slowly back to the start.",
+    tip_form: "Point your toes slightly upward (dorsiflex) at the top of the movement. This shifts more tension onto the rectus femoris (the central quad muscle that creates the visible quad definition).",
+    tip_timing: "Squeeze and hold at full extension for 2 full seconds on every rep. The quad's peak contraction is at full extension — this isometric hold is what makes leg extensions effective for hypertrophy, not just the movement itself.",
+    tip_hypertrophy: "On your last set, perform a drop set — immediately lower the weight by 30% and rep to failure again. This extended metabolic stress after you've already hit failure is uniquely effective for quad hypertrophy."
+  },
+  "Rotary torso (machine)": {
+    how_to: "Sit in the machine with your arms hugging the pads against your chest. Set the range of motion stops to your comfortable rotation range. Rotate your torso to one side, hold briefly, then return under control. Complete all reps on one side before switching.",
+    tip_form: "The movement should come from your waist/obliques — not your hips or shoulders. If your hips are moving, you're rotating at the wrong joint. The pelvis stays completely still.",
+    tip_timing: "Use a 2-second rotation, 1-second hold, 2-second return tempo. The obliques respond best to controlled, deliberate contractions — never momentum-driven swinging.",
+    tip_hypertrophy: "Obliques are the primary side-waist muscle that creates the V-taper appearance. Combined with HIIT cardio for fat loss, developed obliques are the fastest visual path to the 'cut' look you're targeting."
+  },
+  "Prone leg curl (machine)": {
+    how_to: "Lie face-down on the machine, aligning your knee joint with the machine's pivot point. The roller should sit just above your ankles. Curl your legs toward your glutes as far as the machine allows, squeeze the hamstrings at the top, then lower slowly to full extension.",
+    tip_form: "Turn your toes slightly inward during the curl. This external hip rotation creates more stretch on the outer hamstring (biceps femoris), which is the largest and most visible hamstring muscle.",
+    tip_timing: "Lower for 3–4 full seconds on every rep. Hamstrings respond exceptionally well to slow eccentrics because they have a high proportion of fast-twitch fibers that are particularly responsive to eccentric loading.",
+    tip_hypertrophy: "The prone position (face down) keeps your hip in extension, which fully stretches the hamstring before the curl begins. This stretched starting position is why prone leg curls outperform seated leg curls for hamstring hypertrophy."
+  },
+  "Calf press (machine)": {
+    how_to: "Position your feet shoulder-width apart on the platform with the balls of your feet on the edge and heels hanging off. Press the weight up by rising onto your toes fully, then lower your heels as far below the platform level as possible for a deep stretch. Pause at the bottom before the next rep.",
+    tip_form: "Do not bounce out of the bottom position. The temptation to use a slight bounce removes the stretch and turns calves into a momentum exercise — the stretch is literally the growth stimulus.",
+    tip_timing: "Hold the deep stretch at the bottom for 1 full second every rep. Calves are composed primarily of slow-twitch fibers that respond to time-under-tension more than explosive reps.",
+    tip_hypertrophy: "Full range of motion is everything for calf development — a 2-inch range of motion at heavy weight produces far less hypertrophy than full range at moderate weight. The stretch reflex of the Achilles tendon is what drives calf growth."
+  },
+  "Arnold press (dumbbell)": {
+    how_to: "Sit upright holding dumbbells at shoulder height with palms facing toward you, elbows bent and in front of your chest. As you press the dumbbells upward, rotate your palms outward so that at full extension your palms face away from you. Reverse the rotation as you lower.",
+    tip_form: "Don't rush the rotation — the twist should happen gradually throughout the entire pressing motion, not all at once at the beginning or end. The controlled rotation is what makes this exercise unique.",
+    tip_timing: "Control the lowering — take 3 seconds to bring the dumbbells back to the start position with palms facing you. Most people drop weight on the way down and lose all the eccentric benefit.",
+    tip_hypertrophy: "The Arnold press is the only single shoulder exercise that effectively recruits all three deltoid heads (anterior, lateral, and posterior) in one movement. Standard overhead presses only hit the anterior and lateral heads — this is its key advantage."
+  },
+  "Pec deck (machine)": {
+    how_to: "Sit with your back flat against the pad. Place your forearms against the pads or grab the handles (depending on the machine) with elbows at about 90°. Drive the pads together in a hugging arc until they meet in front of your chest. Control the return — don't let it slam back.",
+    tip_form: "Grip the pads with a soft grip — don't squeeze them. Gripping too hard activates forearm and tricep muscles, which reduces the chest's relative workload. Let your chest do the driving.",
+    tip_timing: "Squeeze the pads together for 2 full seconds at peak contraction on every rep. Unlike dumbbells which go slack at the top of a fly, pec deck machines maintain resistance at full adduction — use this advantage.",
+    tip_hypertrophy: "Pec deck machines use a cam system that maintains constant tension through the full arc — this is mechanically superior to dumbbell flys, which lose tension at the peak contraction where the chest is most activated."
+  },
+  "Tricep extension machine": {
+    how_to: "Adjust the seat so your upper arms rest on the pad parallel to the floor. Grip the handles with an overhand grip. Your elbows should be at the edge of the pad. Extend your forearms forward and down until your arms are straight, squeezing the triceps hard. Return slowly.",
+    tip_form: "Keep your upper arms completely still and flat on the pad throughout the movement. If your elbows rise off the pad, you're involving the shoulders and reducing pure tricep stimulus.",
+    tip_timing: "Perform the extension in 1 second, hold at full extension for 1 second, and return in 3 seconds. The 3-second eccentric creates significant mechanical tension in the tricep during the lengthening phase.",
+    tip_hypertrophy: "Triceps make up approximately 2/3 of upper arm mass. Machines allow you to train past the point of failure safely when a spotter isn't available — push your last set to absolute failure to maximize metabolic stress."
+  },
+  "Seated rear delt fly (dumbbell)": {
+    how_to: "Sit at the end of a bench and hinge your torso forward so your chest rests on your thighs. Hold dumbbells below your thighs with a neutral grip. With a slight bend in the elbows, raise both dumbbells up and out to the sides in an arc until your arms are parallel to the floor. Lower slowly.",
+    tip_form: "Lead the movement with your elbows, not your hands or the dumbbells. Imagine pushing your elbows toward the ceiling — this cue naturally keeps the rear delt as the prime mover rather than the traps.",
+    tip_timing: "Stop when your arms reach parallel to the floor — going higher recruits the traps and rhomboids, removing the rear delt from the movement. Precision beats load for this muscle.",
+    tip_hypertrophy: "Rear delts are the single most neglected upper-body muscle and the primary differentiator between a flat-looking shoulder and a round, three-dimensional one. They respond quickly to direct, dedicated work."
+  },
+  "Wide grip lat pulldown (machine)": {
+    how_to: "Sit and secure your thighs under the pads. Grip the bar wider than shoulder-width with an overhand grip. Lean back slightly (15°), then pull the bar down to your upper chest by driving your elbows down and back. Control the bar back up to a full stretch with arms extended.",
+    tip_form: "Pull the bar to your upper chest, not behind your neck. Behind-the-neck pulldowns are a known cause of cervical spine injury and do not provide any additional lat benefit.",
+    tip_timing: "Let the bar pull you all the way up to a full dead-stretch at the top of every rep. Cutting this short removes the most important part of lat development — the loaded stretch position.",
+    tip_hypertrophy: "Imagine pulling your elbows down to your hip pockets (not just pulling your hands down). This mental cue activates the lats directly and reduces bicep involvement — the difference between a lat exercise and an arm exercise."
+  },
+  "Seated incline dumbbell curl": {
+    how_to: "Set a bench to 60°. Sit back against it and let your arms hang freely behind your torso with dumbbells in hand, palms facing forward. From this dead-stretched position, curl the dumbbells to shoulder height, squeeze, then lower fully back to the dead hang.",
+    tip_form: "Let your arms hang fully behind your torso at the bottom — don't start from a neutral hanging position. The arm must be behind the body's centerline for the bicep to reach its full stretched length.",
+    tip_timing: "Hold the peak squeeze at shoulder height for 1 second, then lower for 3 seconds. The 3-second eccentric from a fully contracted position back to a fully stretched position maximizes both the stretch stimulus and time under tension.",
+    tip_hypertrophy: "This is scientifically the most effective single bicep exercise because it trains the muscle in the stretched position under load — recent research (2023, Pedrosa et al.) showed stretched-position loading drives 2× more hypertrophy than shortened-position work."
+  },
+  "Alternating mid row (machine)": {
+    how_to: "Sit at the mid row machine. Using the single-arm attachment, row one arm back fully — driving the elbow past your torso — while the other arm stays extended. Alternate sides, pausing with the extended arm fully stretched before each row.",
+    tip_form: "Pause with the non-working arm fully extended and the shoulder protracted before you begin each row. This forced pause ensures each side handles the full load independently rather than cheating through momentum.",
+    tip_timing: "Row in 1 second, hold at peak contraction for 1 second, return in 2 seconds. The slow return with the shoulder protracted at the end creates a full mid-back stretch before the next rep.",
+    tip_hypertrophy: "Unilateral (one-side-at-a-time) rowing allows you to achieve a deeper stretch and fuller contraction per side than bilateral rows, and fixes the left-right strength imbalances that create visual asymmetry over time."
+  },
+  "Cross-body hammer curl": {
+    how_to: "Stand holding a dumbbell in one hand at your side. With a neutral grip (thumb pointing up), curl the dumbbell across your body toward the opposite shoulder. Lower back to the start under control. Complete all reps on one arm or alternate sides.",
+    tip_form: "Keep your elbow pinned at your side throughout — don't let it drift forward as you lift. The cross-body path only works if the upper arm stays stationary, otherwise you're creating a front raise hybrid.",
+    tip_timing: "Alternate arms and take a 1-second pause between each curl when the arm is fully extended at your side. This reset between reps removes momentum and ensures every rep starts from zero.",
+    tip_hypertrophy: "The cross-body path specifically maximizes brachialis loading — the muscle under the bicep that physically pushes the bicep peak higher when developed. The brachialis is neutral-grip dominant and will not grow from standard supinated curls."
+  },
+  "Pronated reverse curl (barbell)": {
+    how_to: "Stand holding a barbell with an overhand (pronated) grip at about shoulder-width. Keep your elbows pinned at your sides. Curl the barbell up toward your shoulders using your forearms, then lower slowly back to the start. Keep wrists neutral — don't let them flex or extend.",
+    tip_form: "Keep your wrists neutral throughout — neither flexed up nor extended down. Breaking the wrist shifts load from the brachioradialis to the wrist flexors, reducing the training effect on the forearm.",
+    tip_timing: "Perform 3-second eccentrics (lowering phase). The brachioradialis is highly responsive to slow, controlled lowering under pronated load — this is what makes reverse curls far more effective than they look.",
+    tip_hypertrophy: "Forearm and grip strength is the limiting factor in every pulling exercise. Developing the brachioradialis with reverse curls directly increases the weight you can handle on rows, pull-ups, and deadlifts — making every other back exercise more productive."
+  },
+  "Plank": {
+    how_to: "Start in a forearm position with elbows under your shoulders and forearms flat on the floor. Extend your legs behind you so only your toes and forearms are in contact with the floor. Your body should form a perfectly straight line from your head to your heels. Hold this position without letting your hips sag or pike.",
+    tip_form: "Squeeze your glutes as hard as possible during the plank. Most people focus only on the abs, but glute contraction posteriorly tilts the pelvis which activates the deep TVA (transverse abdominis) — the real target.",
+    tip_timing: "Breathe diaphragmatically — big breath into your belly, not your chest — and brace your core against that breath as if you're about to take a punch. This 360° brace is far more effective than just 'tightening your abs.'",
+    tip_hypertrophy: "The TVA (transverse abdominis) acts as a natural corset around your waist — it's the muscle responsible for the flat, tight stomach look even when you're not flexing. It only activates properly with a posterior pelvic tilt and full glute contraction."
+  },
+  "Close-grip pull-ups (weighted)": {
+    how_to: "Hang from a bar with hands 6–10 inches apart, palms facing away from you. From a full dead-hang, pull your body up by driving your elbows down until your chin clears the bar. Lower slowly back to a complete dead-hang before each rep.",
+    tip_form: "As you pull, try to get your chest to touch the bar rather than just your chin over it. This forces proper shoulder blade depression and lat engagement rather than letting the biceps dominate the movement.",
+    tip_timing: "Take 3 full seconds to lower on every rep. The eccentric of a weighted pull-up is one of the most demanding and productive movements for both lat width and bicep development — don't waste it by dropping fast.",
+    tip_hypertrophy: "Close grip shifts significantly more load onto the biceps compared to wide grip pull-ups, while still providing substantial lat stimulus. This makes it an efficient compound movement for arm day — two major muscles trained with one movement."
+  },
+  "Cable crunch (kneeling)": {
+    how_to: "Attach a rope to a high cable pulley. Kneel facing the machine and hold the rope behind your head with both hands. Starting with your torso upright, crunch your ribcage toward your hips by rounding your spine — not bending at the hips. Hold briefly at the bottom, then return to upright.",
+    tip_form: "The movement is a spinal flexion (ribcage to hips), NOT a hip hinge (torso angling forward). If your hips are moving, you're doing a hip flexor exercise, not an ab exercise. The pelvis stays still.",
+    tip_timing: "Exhale forcefully at the bottom of the crunch and hold the contraction for 1 second before returning. Active exhalation forces full rectus abdominis contraction — try to 'squeeze all the air out of your lungs' at the bottom.",
+    tip_hypertrophy: "Cable crunches allow progressive overload on the abs — adding weight just like any other muscle. This is the key advantage over bodyweight crunches. Progressive overload is what actually develops visible abdominal definition."
+  },
+  "Chest press machine": {
+    how_to: "Adjust the seat so the handles are at mid-chest height. Sit with your back flat against the pad. Grip the handles with palms facing down or in a neutral position. Press the handles forward until your arms are nearly extended, then return slowly until you feel a stretch across your chest.",
+    tip_form: "Keep your shoulder blades retracted (pinched together) and pressed into the back pad throughout the set. Allowing the shoulders to roll forward rounds the upper back and reduces chest activation.",
+    tip_timing: "Perform a 2-second press, 1-second hold at extension, and 3-second return. The machine's consistent resistance curve means there's no 'dead spot' — use a slower eccentric to maximize time under tension across the full arc.",
+    tip_hypertrophy: "Machines allow you to safely train past the point of momentary muscular failure since there's no risk of being pinned under a barbell. Use this to push further than you can with free weights — and perform a drop set on your last set for maximum metabolic stress."
+  }
+};
+
+// Helper: get info for an exercise by name, with fallback
+function getInfo(name) {
+  return EXERCISE_INFO[name] || {
+    how_to: '',
+    tip_form: '',
+    tip_timing: '',
+    tip_hypertrophy: ''
+  };
+}
+
+const SPLITS=[
+// ═══════════════════════════════════════════════════
+// SPLIT 1 — PUSH / PULL / LEGS
+// ═══════════════════════════════════════════════════
+{
+  name:"Push / Pull / Legs",
+  desc:"5 days: Push · Pull · Legs · Push · Pull. Chest/shoulders/triceps and back/biceps each hit twice per week — optimal frequency for hypertrophy. Legs once. Best for upper-body focus.",
+  days:[
+    {label:"Day 1",name:"Push A",exercises:[
+      {num:1,name:"Bench press (barbell)",tags:["chest","triceps"],sets:"5 sets",reps:"5–6 reps",rest:"90s",dw:"105 lb",floor:"bottom",wait:"Close-grip push-ups or push-ups with feet elevated on the bench."},
+      {num:2,name:"Shoulder press machine",tags:["shoulders"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"70 lb",floor:"top",wait:"Dumbbell lateral raises standing."},
+      {num:3,name:"Incline dumbbell press",tags:["upper chest"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"50 lb each",floor:"top",wait:"Incline push-ups on a bench."},
+      {num:4,name:"Skull crushers (EZ bar)",tags:["triceps"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"40 lb",floor:"top",wait:"Diamond push-ups on a mat."},
+      {num:5,name:"Cable pec fly",tags:["chest"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"60 lb",floor:"top",wait:"Resistance band fly or push-ups with hands on dumbbells."},
+      {num:6,name:"Tricep press machine",tags:["triceps"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"135 lb",floor:"top",wait:"Overhead dumbbell tricep extension or cable pushdown."},
+    ]},
+    {label:"Day 2",name:"Pull A",exercises:[
+      {num:1,name:"Wide grip pull-ups (weighted)",tags:["lats"],sets:"3 sets",reps:"10 reps",rest:"90s",dw:"+35 lb",floor:"top",wait:"Lat pulldown machine at wide grip setting."},
+      {num:2,name:"Zottman curl (dumbbell)",tags:["biceps","forearms"],sets:"3 sets",reps:"10–11 reps",rest:"60s",dw:"35 lb each",floor:"top",wait:"Hammer curls with lighter dumbbells."},
+      {num:3,name:"Chest-stabilized mid row (machine)",tags:["mid back","rhomboids"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"100 lb",floor:"top",wait:"Seated cable row with close-grip handle."},
+      {num:4,name:"Preacher curl machine",tags:["biceps"],sets:"3 sets",reps:"8–10 reps",rest:"60s",dw:"40 lb",floor:"top",wait:"Incline dumbbell curl on a 60° bench."},
+      {num:5,name:"Back extension (machine)",tags:["lower back","glutes"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"120 lb",floor:"top",wait:"Hyperextensions on a Roman chair."},
+      {num:6,name:"Reverse pec fly (machine)",tags:["rear delts","upper back"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"35 lb",floor:"top",wait:"Face pulls on cable or band pull-aparts."},
+    ]},
+    {label:"Day 3",name:"Legs + Core",exercises:[
+      {num:1,name:"Leg press (machine)",tags:["quads","glutes"],sets:"4 sets",reps:"10–12 reps",rest:"90s",dw:"230 lb",floor:"bottom",wait:"Bodyweight jump squats or goblet squats with kettlebell."},
+      {num:2,name:"Roman chair leg raise",tags:["lower abs"],sets:"3 sets",reps:"12–15 reps",rest:"60s",dw:"bodyweight",floor:"bottom",wait:"Plank hold 60–90 seconds."},
+      {num:3,name:"Leg extension (machine)",tags:["quads"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"110 lb",floor:"bottom",wait:"Wall sit to failure."},
+      {num:4,name:"Rotary torso (machine)",tags:["obliques","core"],sets:"3 sets",reps:"8–10 each side",rest:"60s",dw:"140 lb",floor:"bottom",wait:"Standing oblique crunch holding a kettlebell."},
+      {num:5,name:"Prone leg curl (machine)",tags:["hamstrings"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"95 lb",floor:"bottom",wait:"Nordic curls with feet hooked under a bench."},
+      {num:6,name:"Calf press (machine)",tags:["calves"],sets:"3 sets",reps:"12–15 reps",rest:"60s",dw:"180 lb",floor:"bottom",wait:"Single-leg calf raises on a step edge."},
+    ]},
+    {label:"Day 4",name:"Push B",exercises:[
+      {num:1,name:"Bench press (barbell)",tags:["chest","triceps"],sets:"4 sets",reps:"8–10 reps",rest:"90s",dw:"110 lb",floor:"bottom",wait:"Close-grip bench press or push-up with a weight plate on back."},
+      {num:2,name:"Arnold press (dumbbell)",tags:["shoulders"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"30 lb each",floor:"top",wait:"Dumbbell lateral raises or seated front raises."},
+      {num:3,name:"Pec deck (machine)",tags:["chest"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"95 lb",floor:"top",wait:"Dumbbell chest flys on a flat bench."},
+      {num:4,name:"Tricep extension machine",tags:["triceps"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"85 lb",floor:"top",wait:"Overhead dumbbell extension or cable pushdown."},
+      {num:5,name:"Seated rear delt fly (dumbbell)",tags:["rear delts"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"25 lb each",floor:"top",wait:"Face pulls on cable or reverse pec deck."},
+      {num:6,name:"Skull crushers (EZ bar)",tags:["triceps"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"40 lb",floor:"top",wait:"Dips between two benches or overhead cable extension."},
+    ]},
+    {label:"Day 5",name:"Pull B",exercises:[
+      {num:1,name:"Wide grip lat pulldown (machine)",tags:["lats"],sets:"3 sets",reps:"10 reps",rest:"90s",dw:"100 lb",floor:"top",wait:"Straight-arm lat pulldown on the same cable stack."},
+      {num:2,name:"Seated incline dumbbell curl",tags:["biceps"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"25 lb each",floor:"top",wait:"Cable curl or concentration curl."},
+      {num:3,name:"Alternating mid row (machine)",tags:["mid back"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"80 lb",floor:"top",wait:"Single-arm dumbbell row on a flat bench."},
+      {num:4,name:"Cross-body hammer curl",tags:["biceps","brachialis"],sets:"3 sets",reps:"11–12 each side",rest:"60s",dw:"30 lb each",floor:"top",wait:"Reverse curl with EZ bar."},
+      {num:5,name:"Back extension (machine)",tags:["lower back","glutes"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"110 lb",floor:"top",wait:"Good mornings with light barbell or bird-dog on mat."},
+      {num:6,name:"Pronated reverse curl (barbell)",tags:["forearms","brachioradialis"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"35 lb",floor:"top",wait:"Wrist curls on a bench or farmer's carry with dumbbells."},
+    ]},
+  ]
+},
+// ═══════════════════════════════════════════════════
+// SPLIT 2 — UPPER / LOWER
+// ═══════════════════════════════════════════════════
+{
+  name:"Upper / Lower",
+  desc:"5 days: Upper A · Lower A · Upper B · Lower B · Core+Arms. Each muscle hit 2× per week. Best science-backed structure for natural lifters — balanced stimulus and recovery.",
+  days:[
+    {label:"Day 1",name:"Upper A — Strength",exercises:[
+      {num:1,name:"Bench press (barbell)",tags:["chest","triceps"],sets:"5 sets",reps:"5–6 reps",rest:"2–3 min",dw:"105 lb",floor:"bottom",wait:"Close-grip bench or push-ups."},
+      {num:2,name:"Wide grip lat pulldown (machine)",tags:["lats"],sets:"3 sets",reps:"8–10 reps",rest:"90s",dw:"100 lb",floor:"top",wait:"Straight-arm cable pulldown on same stack."},
+      {num:3,name:"Shoulder press machine",tags:["shoulders"],sets:"3 sets",reps:"8–10 reps",rest:"90s",dw:"70 lb",floor:"top",wait:"Seated dumbbell press or Arnold press."},
+      {num:4,name:"Chest-stabilized mid row (machine)",tags:["mid back","rhomboids"],sets:"3 sets",reps:"8 reps",rest:"90s",dw:"80 lb",floor:"top",wait:"Seated cable row."},
+      {num:5,name:"Incline dumbbell press",tags:["upper chest"],sets:"3 sets",reps:"8 reps",rest:"90s",dw:"50 lb each",floor:"top",wait:"Incline push-ups on a bench."},
+      {num:6,name:"Tricep press machine",tags:["triceps"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"135 lb",floor:"top",wait:"Skull crushers with EZ bar."},
+    ]},
+    {label:"Day 2",name:"Lower A",exercises:[
+      {num:1,name:"Leg press (heavy)",tags:["quads","glutes"],sets:"4 sets",reps:"8–10 reps",rest:"2 min",dw:"230 lb",floor:"bottom",wait:"Goblet squat with kettlebell."},
+      {num:2,name:"Rotary torso (machine)",tags:["obliques","core"],sets:"3 sets",reps:"8–10 each side",rest:"60s",dw:"140 lb",floor:"bottom",wait:"Standing oblique crunch with kettlebell."},
+      {num:3,name:"Leg extension (machine)",tags:["quads"],sets:"3 sets",reps:"12–15 reps",rest:"60s",dw:"110 lb",floor:"bottom",wait:"Step-ups on a nearby box."},
+      {num:4,name:"Roman chair leg raise",tags:["lower abs"],sets:"3 sets",reps:"12–15 reps",rest:"60s",dw:"bodyweight",floor:"bottom",wait:"Hanging knee raise or plank hold."},
+      {num:5,name:"Prone leg curl (machine)",tags:["hamstrings"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"95 lb",floor:"bottom",wait:"Nordic curls with feet under a bench."},
+      {num:6,name:"Calf press (machine)",tags:["calves"],sets:"4 sets",reps:"12–15 reps",rest:"60s",dw:"180 lb",floor:"bottom",wait:"Single-leg calf raises on a step edge."},
+    ]},
+    {label:"Day 3",name:"Upper B — Hypertrophy",exercises:[
+      {num:1,name:"Wide grip pull-ups (weighted)",tags:["lats"],sets:"4 sets",reps:"8–10 reps",rest:"90s",dw:"+35 lb",floor:"top",wait:"Assisted pull-up machine or lat pulldown."},
+      {num:2,name:"Pec deck (machine)",tags:["chest"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"95 lb",floor:"top",wait:"Cable fly or dumbbell chest fly."},
+      {num:3,name:"Reverse pec fly (machine)",tags:["rear delts"],sets:"3 sets",reps:"12–15 reps",rest:"60s",dw:"35 lb",floor:"top",wait:"Band pull-aparts or face pulls on cable."},
+      {num:4,name:"Cable pec fly",tags:["chest"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"60 lb",floor:"top",wait:"Resistance band fly."},
+      {num:5,name:"Preacher curl machine",tags:["biceps"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"40 lb",floor:"top",wait:"Incline dumbbell curl or cable curl."},
+      {num:6,name:"Back extension (machine)",tags:["lower back","glutes"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"120 lb",floor:"top",wait:"Good mornings with light barbell."},
+    ]},
+    {label:"Day 4",name:"Lower B — Hypertrophy",exercises:[
+      {num:1,name:"Leg press (volume)",tags:["quads","glutes"],sets:"4 sets",reps:"12–15 reps",rest:"90s",dw:"200 lb",floor:"bottom",wait:"Goblet squats with kettlebell."},
+      {num:2,name:"Calf press (machine)",tags:["calves"],sets:"3 sets",reps:"20 reps",rest:"45s",dw:"160 lb",floor:"bottom",wait:"Single-leg calf raises."},
+      {num:3,name:"Leg extension (machine)",tags:["quads"],sets:"4 sets",reps:"15 reps",rest:"60s",dw:"110 lb",floor:"bottom",wait:"Box step-ups or jump squats."},
+      {num:4,name:"Roman chair leg raise",tags:["lower abs"],sets:"3 sets",reps:"15–20 reps",rest:"60s",dw:"bodyweight",floor:"bottom",wait:"Hanging knee raise or plank."},
+      {num:5,name:"Prone leg curl (machine)",tags:["hamstrings"],sets:"4 sets",reps:"12–15 reps",rest:"60s",dw:"80 lb",floor:"bottom",wait:"Nordic curls."},
+      {num:6,name:"Plank",tags:["core"],sets:"3 sets",reps:"90 seconds",rest:"45s",dw:"bodyweight",floor:"bottom",wait:"Dead bug exercise on a mat."},
+    ]},
+    {label:"Day 5",name:"Core + Arms",exercises:[
+      {num:1,name:"Close-grip pull-ups (weighted)",tags:["lats","biceps"],sets:"3 sets",reps:"8–10 reps",rest:"90s",dw:"+40 lb",floor:"top",wait:"Close-grip lat pulldown."},
+      {num:2,name:"Tricep extension machine",tags:["triceps"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"85 lb",floor:"top",wait:"Overhead dumbbell extension or cable pushdown."},
+      {num:3,name:"Seated incline dumbbell curl",tags:["biceps"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"25 lb each",floor:"top",wait:"Cable curl standing."},
+      {num:4,name:"Skull crushers (EZ bar)",tags:["triceps"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"40 lb",floor:"top",wait:"Dips between benches or overhead cable extension."},
+      {num:5,name:"Cross-body hammer curl",tags:["brachialis"],sets:"3 sets",reps:"12 each side",rest:"60s",dw:"30 lb each",floor:"top",wait:"Reverse curl or neutral-grip curl."},
+      {num:6,name:"Cable crunch (kneeling)",tags:["abs","core"],sets:"3 sets",reps:"15–20 reps",rest:"60s",dw:"50 lb",floor:"top",wait:"Roman chair leg raise or plank."},
+    ]},
+  ]
+},
+// ═══════════════════════════════════════════════════
+// SPLIT 3 — CHEST+TRI / BACK+BI / LEGS
+// ═══════════════════════════════════════════════════
+{
+  name:"Chest+Tri / Back+Bi / Legs",
+  desc:"5 days: Chest+Tri · Back+Bi · Legs · Chest+Tri · Back+Bi. Classic bodybuilding split, closest to your current routine. Each muscle group twice/week with upgraded exercise selection.",
+  days:[
+    {label:"Day 1",name:"Chest + Tri A",exercises:[
+      {num:1,name:"Bench press (barbell)",tags:["chest","triceps"],sets:"5 sets",reps:"5 reps",rest:"2–3 min",dw:"105 lb",floor:"bottom",wait:"Close-grip push-ups or push-up with plate on back."},
+      {num:2,name:"Tricep press machine",tags:["triceps"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"135 lb",floor:"top",wait:"Overhead dumbbell extension or close-grip push-ups."},
+      {num:3,name:"Incline dumbbell press",tags:["upper chest"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"50 lb each",floor:"top",wait:"Incline push-ups on a bench."},
+      {num:4,name:"Skull crushers (EZ bar)",tags:["triceps"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"40 lb",floor:"top",wait:"Diamond push-ups or overhead cable extension."},
+      {num:5,name:"Pec deck (machine)",tags:["chest"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"95 lb",floor:"top",wait:"Cable fly or dumbbell chest fly."},
+      {num:6,name:"Tricep extension machine",tags:["triceps"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"85 lb",floor:"top",wait:"Overhead dumbbell extension or cable pushdown."},
+    ]},
+    {label:"Day 2",name:"Back + Bi A",exercises:[
+      {num:1,name:"Wide grip pull-ups (weighted)",tags:["lats"],sets:"3 sets",reps:"10 reps",rest:"90s",dw:"+35 lb",floor:"top",wait:"Lat pulldown machine nearby."},
+      {num:2,name:"Zottman curl (dumbbell)",tags:["biceps","forearms"],sets:"3 sets",reps:"10–11 reps",rest:"60s",dw:"35 lb each",floor:"top",wait:"Hammer curls with lighter dumbbells."},
+      {num:3,name:"Chest-stabilized mid row (machine)",tags:["mid back","rhomboids"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"100 lb",floor:"top",wait:"Seated cable row."},
+      {num:4,name:"Preacher curl machine",tags:["biceps"],sets:"3 sets",reps:"8–10 reps",rest:"60s",dw:"40 lb",floor:"top",wait:"Incline dumbbell curl or cable curl."},
+      {num:5,name:"Back extension (machine)",tags:["lower back","glutes"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"120 lb",floor:"top",wait:"Good mornings with light barbell."},
+      {num:6,name:"Alternating mid row (machine)",tags:["mid back"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"80 lb",floor:"top",wait:"Single-arm dumbbell row on flat bench."},
+    ]},
+    {label:"Day 3",name:"Legs + Abs",exercises:[
+      {num:1,name:"Leg press (machine)",tags:["quads","glutes"],sets:"4 sets",reps:"10 reps",rest:"90s",dw:"230 lb",floor:"bottom",wait:"Goblet squats with kettlebell."},
+      {num:2,name:"Roman chair leg raise",tags:["lower abs"],sets:"3 sets",reps:"12–15 reps",rest:"60s",dw:"bodyweight",floor:"bottom",wait:"Plank 60–90 seconds."},
+      {num:3,name:"Leg extension (machine)",tags:["quads"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"110 lb",floor:"bottom",wait:"Wall sit to failure."},
+      {num:4,name:"Rotary torso (machine)",tags:["obliques","core"],sets:"3 sets",reps:"8–10 each side",rest:"60s",dw:"140 lb",floor:"bottom",wait:"Kettlebell side bend or standing oblique crunch."},
+      {num:5,name:"Prone leg curl (machine)",tags:["hamstrings"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"95 lb",floor:"bottom",wait:"Nordic curls."},
+      {num:6,name:"Calf press (machine)",tags:["calves"],sets:"4 sets",reps:"15 reps",rest:"60s",dw:"180 lb",floor:"bottom",wait:"Standing calf raises on a step edge."},
+    ]},
+    {label:"Day 4",name:"Chest + Tri B",exercises:[
+      {num:1,name:"Chest press machine",tags:["chest"],sets:"4 sets",reps:"10–12 reps",rest:"90s",dw:"110 lb",floor:"top",wait:"Push-ups or dumbbell press."},
+      {num:2,name:"Arnold press (dumbbell)",tags:["shoulders"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"30 lb each",floor:"top",wait:"Dumbbell lateral raises or seated front raises."},
+      {num:3,name:"Cable pec fly",tags:["chest"],sets:"3 sets",reps:"12–15 reps",rest:"60s",dw:"60 lb",floor:"top",wait:"Resistance band fly."},
+      {num:4,name:"Skull crushers (EZ bar)",tags:["triceps"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"40 lb",floor:"top",wait:"Overhead dumbbell extension or dips between benches."},
+      {num:5,name:"Seated rear delt fly (dumbbell)",tags:["rear delts"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"25 lb each",floor:"top",wait:"Face pulls on cable or reverse pec deck."},
+      {num:6,name:"Tricep press machine",tags:["triceps"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"135 lb",floor:"top",wait:"Close-grip push-ups or cable pushdown."},
+    ]},
+    {label:"Day 5",name:"Back + Bi B",exercises:[
+      {num:1,name:"Wide grip lat pulldown (machine)",tags:["lats"],sets:"4 sets",reps:"10 reps",rest:"90s",dw:"100 lb",floor:"top",wait:"Straight-arm cable pulldown."},
+      {num:2,name:"Seated incline dumbbell curl",tags:["biceps"],sets:"3 sets",reps:"10–12 reps",rest:"60s",dw:"25 lb each",floor:"top",wait:"Cable curl or concentration curl."},
+      {num:3,name:"Back extension (machine)",tags:["lower back","glutes"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"110 lb",floor:"top",wait:"Good mornings or bird-dog on mat."},
+      {num:4,name:"Cross-body hammer curl",tags:["brachialis"],sets:"3 sets",reps:"12 each side",rest:"60s",dw:"30 lb each",floor:"top",wait:"Neutral-grip curl or reverse curl."},
+      {num:5,name:"Alternating mid row (machine)",tags:["mid back"],sets:"3 sets",reps:"10 reps",rest:"60s",dw:"80 lb",floor:"top",wait:"Resistance band row or dumbbell row."},
+      {num:6,name:"Pronated reverse curl (barbell)",tags:["forearms","brachioradialis"],sets:"3 sets",reps:"12 reps",rest:"60s",dw:"35 lb",floor:"top",wait:"Wrist curls on a bench or farmer's carry."},
+    ]},
+  ]
+}
+];
+
+// Inject info into each exercise at runtime
+SPLITS.forEach(function(split){
+  split.days.forEach(function(day){
+    day.exercises.forEach(function(ex){
+      var info = getInfo(ex.name);
+      // For "Leg press (heavy)" and "Leg press (volume)" reuse base Leg press info
+      if(!info.how_to) info = getInfo("Leg press (machine)");
+      ex.how_to = info.how_to;
+      ex.tip_form = info.tip_form;
+      ex.tip_timing = info.tip_timing;
+      ex.tip_hypertrophy = info.tip_hypertrophy;
+    });
+  });
+});
+
+
+// ─── STORAGE HELPERS ──────────────────────────────────────────────────────────
+function wKey(si,di,en){ return 'wt_s'+si+'_d'+di+'_e'+en; }
+function saveW(k,v){ try{localStorage.setItem(k,v);}catch(e){} }
+function loadW(k,fb){ try{return localStorage.getItem(k)||fb;}catch(e){return fb;} }
+function overrideKey(si,di,num,field){ return 'ovr_s'+si+'_d'+di+'_e'+num+'_'+field; }
+function saveOverride(si,di,num,field,val){ try{localStorage.setItem(overrideKey(si,di,num,field),val);}catch(e){} }
+function loadOverride(si,di,num,field,fallback){ try{return localStorage.getItem(overrideKey(si,di,num,field))||fallback;}catch(e){return fallback;} }
+function orderKey(si,di){ return 'order_s'+si+'_d'+di; }
+function saveOrder(si,di,arr){ try{localStorage.setItem(orderKey(si,di),JSON.stringify(arr));}catch(e){} }
+function loadOrder(si,di){ try{var v=localStorage.getItem(orderKey(si,di)); return v?JSON.parse(v):null;}catch(e){return null;} }
+function customKey(si,di){ return 'custom_s'+si+'_d'+di; }
+function loadCustom(si,di){ try{return JSON.parse(localStorage.getItem(customKey(si,di))||'[]');}catch(e){return[];} }
+function saveCustom(si,di,arr){ try{localStorage.setItem(customKey(si,di),JSON.stringify(arr));}catch(e){} }
+
+// ─── FIELD SAVE FLASH ─────────────────────────────────────────────────────────
+function flashSaved(el){
+  var s=el.parentElement.querySelector('.field-saved');
+  if(!s)return;
+  s.classList.add('show'); clearTimeout(el._ft);
+  el._ft=setTimeout(function(){s.classList.remove('show');},1400);
+}
+function onFieldChange(el,si,di,num,field){
+  saveOverride(si,di,num,field,el.value);
+  flashSaved(el);
+  // if sets or reps changed, update the header pill live
+  if(field==='sets'||field==='reps'){
+    var pillId='pill-'+field+'-s'+si+'d'+di+'e'+num;
+    var pill=document.getElementById(pillId);
+    if(pill)pill.value=el.value;
+  }
+}
+function onPillChange(el,si,di,num,field){
+  saveOverride(si,di,num,field,el.value);
+  // sync the detail field too
+  var detId='det-'+field+'-s'+si+'d'+di+'e'+num;
+  var det=document.getElementById(detId);
+  if(det)det.value=el.value;
+}
+function onWeightChange(el,k){
+  saveW(k,el.value); flashSaved(el);
+}
+
+// ─── FLOOR CHANGE ─────────────────────────────────────────────────────────────
+function onFloorChange(el,si,di,num){
+  saveOverride(si,di,num,'floor',el.value);
+  // Full re-render of the day to regroup by floor
+  rerenderDay(si,di);
+}
+
+// ─── TIMER STATE ─────────────────────────────────────────────────────────────
+var _timers={};
+function timerKey(id){ return 'tmr_'+id; }
+function getTimer(id){
+  if(!_timers[id]) _timers[id]={running:false,remaining:60,interval:null};
+  return _timers[id];
+}
+function parseDuration(str){
+  // accepts "60s", "90 s", "2 min", "1:30", or plain number
+  str=String(str).trim().toLowerCase();
+  var m;
+  if((m=str.match(/^(\d+)\s*:\s*(\d+)$/))){return parseInt(m[1])*60+parseInt(m[2]);}
+  if((m=str.match(/^(\d+)\s*min/))){return parseInt(m[1])*60;}
+  if((m=str.match(/^(\d+)/))){return parseInt(m[1]);}
+  return 60;
+}
+function formatTime(secs){
+  var abs=Math.abs(secs);
+  var m=Math.floor(abs/60);
+  var s=abs%60;
+  var str=(m>0?m+':'+(s<10?'0':'')+s:s+'s');
+  return secs<0?'-'+str:str;
+}
+function updateTimerDisplay(id){
+  var t=getTimer(id);
+  var disp=document.getElementById('tdisp-'+id);
+  if(!disp)return;
+  disp.textContent=formatTime(t.remaining);
+  disp.classList.toggle('over',t.remaining<0);
+  var startBtn=document.getElementById('tbtn-start-'+id);
+  if(startBtn)startBtn.textContent=t.running?'Pause':'Start';
+  if(startBtn)startBtn.className='timer-btn '+(t.running?'pause':'start');
+}
+function timerTick(id){
+  var t=getTimer(id);
+  if(!t.running)return;
+  t.remaining--;
+  updateTimerDisplay(id);
+}
+function toggleTimer(id){
+  var t=getTimer(id);
+  if(t.running){
+    clearInterval(t.interval); t.interval=null; t.running=false;
+  } else {
+    t.running=true;
+    t.interval=setInterval(function(){timerTick(id);},1000);
+  }
+  updateTimerDisplay(id);
+}
+function resetTimer(id,defaultSecs){
+  var t=getTimer(id);
+  clearInterval(t.interval); t.interval=null; t.running=false;
+  t.remaining=defaultSecs;
+  updateTimerDisplay(id);
+}
+function onRestInputChange(el,id,si,di,num){
+  var val=el.value.trim();
+  saveOverride(si,di,num,'rest',val);
+  flashSaved(el);
+  var secs=parseDuration(val);
+  var t=getTimer(id);
+  var wasRunning=t.running;
+  resetTimer(id,secs);
+  // update reset button default
+  var resetBtn=document.getElementById('tbtn-reset-'+id);
+  if(resetBtn) resetBtn.onclick=function(){resetTimer(id,secs);};
+}
+
+// ─── DRAG TO REORDER ─────────────────────────────────────────────────────────
+var _drag={src:null,srcSi:null,srcDi:null};
+function onDragStart(e,si,di,uid){
+  _drag.src=uid; _drag.srcSi=si; _drag.srcDi=di;
+  var card=document.getElementById('card-'+uid);
+  if(card)setTimeout(function(){card.classList.add('dragging');},0);
+  if(e.dataTransfer){ e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain',uid); }
+}
+function onDragOver(e,uid){
+  e.preventDefault();
+  document.querySelectorAll('.exercise-card').forEach(function(c){c.classList.remove('drag-over');});
+  var card=document.getElementById('card-'+uid);
+  if(card&&uid!==_drag.src)card.classList.add('drag-over');
+}
+function onDrop(e,si,di,uid){
+  e.preventDefault();
+  document.querySelectorAll('.exercise-card').forEach(function(c){c.classList.remove('drag-over','dragging');});
+  if(!_drag.src||_drag.src===uid)return;
+  // Get current ordered list of uids for this day
+  var dayEl=document.getElementById('split'+si+'-day'+di);
+  var cards=Array.from(dayEl.querySelectorAll('.exercise-card[data-uid]'));
+  var uids=cards.map(function(c){return c.getAttribute('data-uid');});
+  var fromIdx=uids.indexOf(_drag.src);
+  var toIdx=uids.indexOf(uid);
+  if(fromIdx<0||toIdx<0)return;
+  uids.splice(fromIdx,1); uids.splice(toIdx,0,_drag.src);
+  saveOrder(si,di,uids);
+  rerenderDay(si,di);
+}
+function onDragEnd(){
+  document.querySelectorAll('.exercise-card').forEach(function(c){c.classList.remove('dragging','drag-over');});
+}
+
+// Touch drag support
+var _touch={active:false,uid:null,si:null,di:null,startY:0,ghost:null};
+function onTouchStart(e,si,di,uid){
+  _touch.active=true; _touch.uid=uid; _touch.si=si; _touch.di=di;
+  _touch.startY=e.touches[0].clientY;
+  var card=document.getElementById('card-'+uid);
+  if(card)card.classList.add('dragging');
+}
+function onTouchMove(e){
+  if(!_touch.active)return;
+  e.preventDefault();
+  var y=e.touches[0].clientY;
+  var el=document.elementFromPoint(e.touches[0].clientX,y);
+  if(el){
+    var card=el.closest('.exercise-card[data-uid]');
+    document.querySelectorAll('.exercise-card').forEach(function(c){c.classList.remove('drag-over');});
+    if(card&&card.getAttribute('data-uid')!==_touch.uid)card.classList.add('drag-over');
+  }
+}
+function onTouchEnd(e){
+  if(!_touch.active)return;
+  var y=e.changedTouches[0].clientY;
+  var el=document.elementFromPoint(e.changedTouches[0].clientX,y);
+  document.querySelectorAll('.exercise-card').forEach(function(c){c.classList.remove('drag-over','dragging');});
+  if(el){
+    var card=el.closest('.exercise-card[data-uid]');
+    if(card){
+      var targetUid=card.getAttribute('data-uid');
+      if(targetUid&&targetUid!==_touch.uid){
+        var si=_touch.si,di=_touch.di;
+        var dayEl=document.getElementById('split'+si+'-day'+di);
+        var cards=Array.from(dayEl.querySelectorAll('.exercise-card[data-uid]'));
+        var uids=cards.map(function(c){return c.getAttribute('data-uid');});
+        var fromIdx=uids.indexOf(_touch.uid);
+        var toIdx=uids.indexOf(targetUid);
+        if(fromIdx>=0&&toIdx>=0){
+          uids.splice(fromIdx,1); uids.splice(toIdx,0,_touch.uid);
+          saveOrder(si,di,uids);
+          rerenderDay(si,di);
+        }
+      }
+    }
+  }
+  _touch.active=false;
+}
+document.addEventListener('touchmove',onTouchMove,{passive:false});
+document.addEventListener('touchend',onTouchEnd);
+
+// ─── BUILD EXERCISE CARD HTML ─────────────────────────────────────────────────
+function buildExCard(ex,si,di,uid,isCustom,customCid){
+  // Load any overrides
+  var num=ex.num||uid;
+  var sets=loadOverride(si,di,num,'sets',ex.sets||ex.sets||'3 sets');
+  var reps=loadOverride(si,di,num,'reps',ex.reps||'10 reps');
+  var rest=loadOverride(si,di,num,'rest',ex.rest||'60s');
+  var floor=loadOverride(si,di,num,'floor',ex.floor||'top');
+  var name=loadOverride(si,di,num,'name',ex.name);
+  var how_to=loadOverride(si,di,num,'how_to',ex.how_to||'');
+  var tip_form=loadOverride(si,di,num,'tip_form',ex.tip_form||'');
+  var tip_timing=loadOverride(si,di,num,'tip_timing',ex.tip_timing||'');
+  var tip_hypertrophy=loadOverride(si,di,num,'tip_hypertrophy',ex.tip_hypertrophy||'');
+  var wait=loadOverride(si,di,num,'wait',ex.wait||'');
+  var wk=isCustom?('wt_custom_'+customCid):wKey(si,di,num);
+  var weight=loadW(wk,ex.dw||'—');
+  var tags=(ex.tags||[]);
+  var id='s'+si+'d'+di+'u'+uid;
+  var restSecs=parseDuration(rest);
+  var floorLabel=floor==='bottom'
+    ?'Bottom floor — 1 bench · DBs up to 30 lb · kettlebells'
+    :'Top floor — 5 benches · full DB rack · all machines';
+
+  var numDisp=isCustom
+    ?'<div class="ex-num" style="background:var(--accent);color:white;">+</div>'
+    :'<div class="ex-num">'+num+'</div>';
+
+  return '<div class="exercise-card" id="card-'+uid+'" data-uid="'+uid+'" data-floor="'+floor+'"'
+    +' draggable="true"'
+    +' ondragstart="onDragStart(event,'+si+','+di+',\''+uid+'\')"'
+    +' ondragover="onDragOver(event,\''+uid+'\')"'
+    +' ondrop="onDrop(event,'+si+','+di+',\''+uid+'\')"'
+    +' ondragend="onDragEnd()">'
+    // HEADER
+    +'<div class="exercise-header" onclick="toggleExercise(\''+id+'\')">'
+    +'<div class="drag-handle"'
+    +' ontouchstart="onTouchStart(event,'+si+','+di+',\''+uid+'\')"'
+    +' onclick="event.stopPropagation()">&#8942;&#8942;</div>'
+    +'<div class="ex-left">'
+    +numDisp
+    +'<div>'
+    +'<div class="ex-name">'+name+'</div>'
+    +'<div class="ex-tags">'+tags.map(function(t){return'<span class="tag">'+t+'</span>';}).join('')+'</div>'
+    +'</div></div>'
+    // editable pills in header
+    +'<div class="ex-header-inputs">'
+    +'<div class="pill-input-wrap">'
+    +'<input class="pill-input" id="pill-sets-'+id+'" type="text" value="'+sets+'"'
+    +' onclick="event.stopPropagation()" oninput="onPillChange(this,'+si+','+di+','+JSON.stringify(num)+',' + "'sets')" + '" title="Edit sets" placeholder="sets"/>'
+    +'</div>'
+    +'<div class="pill-input-wrap">'
+    +'<input class="pill-input reps" id="pill-reps-'+id+'" type="text" value="'+reps+'"'
+    +' onclick="event.stopPropagation()" oninput="onPillChange(this,'+si+','+di+','+JSON.stringify(num)+',' + "'reps')" + '" title="Edit reps" placeholder="reps"/>'
+    +'</div>'
+    +'<span class="chevron" id="'+id+'-chev">&#9660;</span>'
+    +'</div>'
+    +'</div>'
+    // DETAIL PANEL
+    +'<div class="exercise-detail" id="'+id+'-detail">'
+    // Row 1: Name + Floor
+    +'<div class="detail-grid" style="margin-top:12px">'
+    +'<div class="detail-box">'
+    +'<div class="detail-label">Exercise name</div>'
+    +'<div class="pill-input-wrap"><input class="editable-field" type="text" value="'+name.replace(/"/g,'&quot;')+'"'
+    +' oninput="onFieldChange(this,'+si+','+di+','+JSON.stringify(num)+',' + "'name')" + '"'
+    +' onclick="event.stopPropagation()"/><span class="field-saved">saved ✓</span></div>'
+    +'</div>'
+    +'<div class="detail-box">'
+    +'<div class="detail-label">Floor</div>'
+    +'<select class="floor-select" onchange="onFloorChange(this,'+si+','+di+','+JSON.stringify(num)+')" onclick="event.stopPropagation()">'
+    +'<option value="top"'+(floor==='top'?' selected':'')+'>Top floor</option>'
+    +'<option value="bottom"'+(floor==='bottom'?' selected':'')+'>Bottom floor</option>'
+    +'</select>'
+    +'</div>'
+    +'</div>'
+    // Row 2: Sets + Reps
+    +'<div class="detail-grid">'
+    +'<div class="detail-box">'
+    +'<div class="detail-label">Sets</div>'
+    +'<div class="pill-input-wrap"><input class="editable-field" id="det-sets-'+id+'" type="text" value="'+sets+'"'
+    +' oninput="onFieldChange(this,'+si+','+di+','+JSON.stringify(num)+',' + "'sets')" + '"'
+    +' onclick="event.stopPropagation()"/><span class="field-saved">saved ✓</span></div>'
+    +'</div>'
+    +'<div class="detail-box">'
+    +'<div class="detail-label">Reps</div>'
+    +'<div class="pill-input-wrap"><input class="editable-field" id="det-reps-'+id+'" type="text" value="'+reps+'"'
+    +' oninput="onFieldChange(this,'+si+','+di+','+JSON.stringify(num)+',' + "'reps')" + '"'
+    +' onclick="event.stopPropagation()"/><span class="field-saved">saved ✓</span></div>'
+    +'</div>'
+    +'</div>'
+    // Row 3: Weight + Rest Timer
+    +'<div class="detail-grid">'
+    +'<div class="detail-box">'
+    +'<div class="detail-label">Your weight</div>'
+    +'<div class="pill-input-wrap"><input class="editable-field" type="text" value="'+weight+'"'
+    +' oninput="onWeightChange(this,\''+wk+'\')" onclick="event.stopPropagation()" placeholder="'+ex.dw+'"/>'
+    +'<span class="field-saved">saved ✓</span></div>'
+    +'</div>'
+    // TIMER BOX
+    +'<div class="detail-box">'
+    +'<div class="detail-label">Rest timer</div>'
+    +'<div class="timer-wrap">'
+    +'<div class="timer-display" id="tdisp-'+id+'">'+formatTime(restSecs)+'</div>'
+    +'<div class="timer-input-row">'
+    +'<input class="timer-set-input" type="text" value="'+rest+'" placeholder="e.g. 60s or 1:30"'
+    +' oninput="onRestInputChange(this,\''+id+'\','+si+','+di+','+JSON.stringify(num)+')"'
+    +' onclick="event.stopPropagation()"/>'
+    +'</div>'
+    +'<div class="timer-btn-row">'
+    +'<button class="timer-btn start" id="tbtn-start-'+id+'" onclick="event.stopPropagation();toggleTimer(\''+id+'\')">Start</button>'
+    +'<button class="timer-btn reset" id="tbtn-reset-'+id+'" onclick="event.stopPropagation();resetTimer(\''+id+'\','+restSecs+')">Reset</button>'
+    +'</div>'
+    +'</div>'
+    +'</div>'
+    +'</div>'
+    // Row 4: How To + 3 Tips + Wait (read-only, full text visible)
+    +(how_to?'<div class="howto-box"><div class="howto-label">&#127919; How to do it</div><div class="info-text">'+how_to+'</div></div>':'')
+    +(tip_form?'<div class="tip-box tip-form"><div class="tip-label">&#128100; Form &amp; Stance</div><div class="info-text">'+tip_form+'</div></div>':'')
+    +(tip_timing?'<div class="tip-box tip-timing"><div class="tip-label">&#9203; Timing &amp; Tempo</div><div class="info-text">'+tip_timing+'</div></div>':'')
+    +(tip_hypertrophy?'<div class="tip-box tip-hypertrophy"><div class="tip-label">&#128313; Hypertrophy</div><div class="info-text">'+tip_hypertrophy+'</div></div>':'')
+    +(wait?'<div class="wait-box"><div class="wait-label">&#9201; If machine is taken</div><div class="info-text">'+wait+'</div></div>':'')
+    // Delete button for custom
+    +(isCustom?'<button class="ex-delete-btn" onclick="event.stopPropagation();deleteCustomExercise('+si+','+di+',\''+customCid+'\')">Remove exercise</button>':'')
+    +'</div>'
+    +'</div>';
+}
+
+// ─── TOGGLE EXERCISE ─────────────────────────────────────────────────────────
+function toggleExercise(id){
+  var d=document.getElementById(id+'-detail');
+  var c=document.getElementById(id+'-chev');
+  if(!d)return;
+  var o=d.classList.contains('open');
+  d.classList.toggle('open',!o); c.classList.toggle('open',!o);
+}
+
+// ─── BUILD / RE-RENDER DAY ────────────────────────────────────────────────────
+function rerenderDay(si,di){
+  var dayEl=document.getElementById('split'+si+'-day'+di);
+  if(!dayEl)return;
+  var day=SPLITS[si].days[di];
+
+  // Build uid list (built-in exercises use num as uid, custom use cid)
+  var builtinUids=day.exercises.map(function(ex){return 'b'+ex.num;});
+  var customArr=loadCustom(si,di);
+  var customUids=customArr.map(function(ex){return 'c'+ex.cid;});
+  var allUids=builtinUids.concat(customUids);
+
+  // Apply saved order
+  var savedOrder=loadOrder(si,di);
+  if(savedOrder){
+    var validSaved=savedOrder.filter(function(u){return allUids.indexOf(u)>=0;});
+    var missing=allUids.filter(function(u){return validSaved.indexOf(u)<0;});
+    allUids=validSaved.concat(missing);
+  }
+
+  // Group by floor (respecting overrides)
+  var byFloor={bottom:[],top:[]};
+  allUids.forEach(function(uid){
+    var isCustom=uid.charAt(0)==='c';
+    var ex,cid;
+    if(isCustom){
+      cid=uid.slice(1);
+      ex=customArr.find(function(e){return e.cid===cid;});
+    } else {
+      var num=parseInt(uid.slice(1));
+      ex=day.exercises.find(function(e){return e.num===num;});
+    }
+    if(!ex)return;
+    var num2=ex.num||uid;
+    var floor=loadOverride(si,di,num2,'floor',ex.floor||'top');
+    if(!byFloor[floor])byFloor[floor]=[];
+    byFloor[floor].push({uid,ex,isCustom,cid:cid||null});
+  });
+
+  var html='';
+  // Warm-up
+  html+='<div class="floor-section"><div class="floor-badge warmup">Warm-up</div>'
+    +'<div class="cardio-card"><div style="font-size:18px">&#9654;</div>'
+    +'<div><div class="c-title">Light cardio — 5 min</div><div class="c-sub">RPE 4–5 &middot; treadmill, bike or elliptical</div></div></div>'
+    +'<div class="cardio-card"><div style="font-size:18px">&#9654;</div>'
+    +'<div><div class="c-title">HIIT cardio — 15 min</div><div class="c-sub">RPE 6–7 &middot; 30s on / 30s off &middot; best fat-burning protocol that preserves muscle</div></div></div>'
+    +'</div>';
+
+  ['bottom','top'].forEach(function(fk){
+    var list=byFloor[fk];
+    if(!list||!list.length)return;
+    var label=fk==='bottom'
+      ?'&#x1F3CB; Bottom floor — 1 bench &middot; DBs up to 30 lb &middot; kettlebells'
+      :'&#x2B06; Top floor — 5 benches &middot; full DB rack &middot; all machines';
+    html+='<div class="floor-section">'
+      +'<div class="floor-badge '+fk+'">'+label+'</div>'
+      +'<div class="reorder-hint">&#8942;&#8942; hold &amp; drag to reorder</div>';
+    list.forEach(function(item){
+      html+=buildExCard(item.ex,si,di,item.uid,item.isCustom,item.cid);
+    });
+    html+='</div>';
+  });
+
+  // Add button
+  html+='<button class="add-ex-btn" onclick="openAddModal('+si+','+di+')">'
+    +'<span class="plus">+</span> Add exercise to this day</button>';
+
+  dayEl.innerHTML=html;
+}
+
+// ─── SHOW SPLIT / DAY ─────────────────────────────────────────────────────────
+function showSplit(idx){
+  document.querySelectorAll('.split-view').forEach(function(v){v.classList.remove('active');});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  document.getElementById('split-'+idx).classList.add('active');
+  document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+}
+function showDay(si,di){
+  document.querySelectorAll('#split-'+si+' .day-pill').forEach(function(p,i){p.classList.toggle('active',i===di);});
+  document.querySelectorAll('#split-'+si+' .day-view').forEach(function(v,i){v.classList.toggle('active',i===di);});
+}
+
+// ─── BUILD SPLIT SKELETON ─────────────────────────────────────────────────────
+function buildSplit(split,si){
+  var cont=document.getElementById('split-'+si);
+  var html='<div class="split-header"><h2>'+split.name+'</h2><p>'+split.desc+'</p></div>'
+    +'<div class="week-grid">'
+    +split.days.map(function(d,i){
+      return '<div class="day-pill '+(i===0?'active':'')+'" onclick="showDay('+si+','+i+')">'
+        +'<div class="day-label">'+d.label+'</div>'
+        +'<div class="day-name">'+d.name+'</div>'
+        +'</div>';
+    }).join('')
+    +'</div>';
+  split.days.forEach(function(day,di){
+    html+='<div class="day-view '+(di===0?'active':'')+'" id="split'+si+'-day'+di+'"></div>';
+  });
+  cont.innerHTML=html;
+  split.days.forEach(function(day,di){
+    rerenderDay(si,di);
+  });
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────────────
+var _modalSi=0,_modalDi=0;
+function openAddModal(si,di){
+  _modalSi=si; _modalDi=di;
+  document.getElementById('modal-title').textContent='Add exercise — '+SPLITS[si].name+' / '+SPLITS[si].days[di].name;
+  ['f-name','f-sets','f-reps','f-weight','f-rest','f-tags','f-tip','f-wait'].forEach(function(id){document.getElementById(id).value='';});
+  document.getElementById('f-floor').value='top';
+  switchModalTab('new');
+  populateCopyFilters();
+  renderCopyList();
+  document.getElementById('modal-overlay').classList.add('open');
+  setTimeout(function(){document.getElementById('f-name').focus();},100);
+}
+function closeModal(){document.getElementById('modal-overlay').classList.remove('open');}
+function closeModalOnBg(e){if(e.target===document.getElementById('modal-overlay'))closeModal();}
+function switchModalTab(tab){
+  document.getElementById('panel-new').style.display=tab==='new'?'block':'none';
+  document.getElementById('panel-copy').style.display=tab==='copy'?'block':'none';
+  document.getElementById('tab-new').classList.toggle('active',tab==='new');
+  document.getElementById('tab-copy').classList.toggle('active',tab==='copy');
+}
+function saveNewExercise(){
+  var name=document.getElementById('f-name').value.trim();
+  if(!name){document.getElementById('f-name').focus();return;}
+  var ex={
+    custom:true,name:name,
+    sets:document.getElementById('f-sets').value.trim()||'3 sets',
+    reps:document.getElementById('f-reps').value.trim()||'10 reps',
+    dw:document.getElementById('f-weight').value.trim()||'—',
+    rest:document.getElementById('f-rest').value.trim()||'60s',
+    floor:document.getElementById('f-floor').value,
+    tags:document.getElementById('f-tags').value.split(',').map(function(t){return t.trim();}).filter(Boolean),
+    tip:document.getElementById('f-tip').value.trim()||'',
+    wait:document.getElementById('f-wait').value.trim()||''
+  };
+  var arr=loadCustom(_modalSi,_modalDi);
+  ex.cid='c'+Date.now();
+  arr.push(ex);
+  saveCustom(_modalSi,_modalDi,arr);
+  closeModal();
+  rerenderDay(_modalSi,_modalDi);
+}
+function populateCopyFilters(){
+  var ss=document.getElementById('copy-split');
+  ss.innerHTML='<option value="">All splits</option>';
+  SPLITS.forEach(function(s,i){ss.innerHTML+='<option value="'+i+'">'+s.name+'</option>';});
+  document.getElementById('copy-day').innerHTML='<option value="">All days</option>';
+}
+function renderCopyList(){
+  var si=document.getElementById('copy-split').value;
+  var di=document.getElementById('copy-day').value;
+  var ds=document.getElementById('copy-day');
+  if(si!==''){
+    var prev=ds.value;
+    ds.innerHTML='<option value="">All days</option>';
+    SPLITS[parseInt(si)].days.forEach(function(d,i){ds.innerHTML+='<option value="'+i+'">'+d.label+': '+d.name+'</option>';});
+    if(prev!=='')ds.value=prev;
+  } else {
+    ds.innerHTML='<option value="">All days</option>';
+    SPLITS.forEach(function(sp,spi){sp.days.forEach(function(d,di2){ds.innerHTML+='<option value="'+spi+'_'+di2+'">'+sp.name+' &rsaquo; '+d.label+': '+d.name+'</option>';});});
+  }
+  var list=document.getElementById('copy-list');
+  var items=[];
+  if(si!==''&&di!==''){
+    var spi=parseInt(si),dii=parseInt(di);
+    SPLITS[spi].days[dii].exercises.forEach(function(ex){items.push({ex:ex,spi:spi,dii:dii});});
+  } else if(si!==''){
+    var spi2=parseInt(si);
+    SPLITS[spi2].days.forEach(function(day,dii2){day.exercises.forEach(function(ex){items.push({ex:ex,spi:spi2,dii:dii2});});});
+  } else {
+    SPLITS.forEach(function(sp,spi3){sp.days.forEach(function(day,dii3){day.exercises.forEach(function(ex){items.push({ex:ex,spi:spi3,dii:dii3});});});});
+  }
+  if(items.length===0){list.innerHTML='<p style="font-size:13px;color:var(--text3)">No exercises found.</p>';return;}
+  list.innerHTML=items.map(function(item){
+    var ex=item.ex,spi=item.spi,dii=item.dii;
+    var safeName=ex.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return '<div class="copy-ex-item"><div>'
+      +'<div class="cei-name">'+ex.name+'</div>'
+      +'<div class="cei-meta">'+SPLITS[spi].name+' &middot; '+SPLITS[spi].days[dii].label+' &middot; '+ex.sets+' &middot; '+ex.reps+'</div>'
+      +'</div><button class="copy-btn" onclick="copyExercise('+spi+','+dii+',\''+safeName+'\')">Copy</button></div>';
+  }).join('');
+}
+function copyExercise(fromSi,fromDi,exName){
+  var ex=SPLITS[fromSi].days[fromDi].exercises.find(function(e){return e.name===exName;});
+  if(!ex)return;
+  var copy=Object.assign({},ex,{custom:true,cid:'c'+Date.now()});
+  var arr=loadCustom(_modalSi,_modalDi);
+  arr.push(copy);
+  saveCustom(_modalSi,_modalDi,arr);
+  closeModal();
+  rerenderDay(_modalSi,_modalDi);
+}
+function deleteCustomExercise(si,di,cid){
+  var arr=loadCustom(si,di).filter(function(e){return e.cid!==cid;});
+  saveCustom(si,di,arr);
+  rerenderDay(si,di);
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+SPLITS.forEach(function(s,i){buildSplit(s,i);});
+</script>
+
+<!-- Add Exercise Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOnBg(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Add exercise</h3>
+      <button class="modal-close" onclick="closeModal()">&#215;</button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="tab-new" onclick="switchModalTab(\'new\')">Write new</button>
+      <button class="modal-tab" id="tab-copy" onclick="switchModalTab(\'copy\')">Copy from plan</button>
+    </div>
+    <div class="modal-body">
+      <div id="panel-new">
+        <div class="form-row"><label class="form-label">Exercise name</label><input class="form-input" id="f-name" type="text" placeholder="e.g. Cable lateral raise"/></div>
+        <div class="form-grid2">
+          <div class="form-row"><label class="form-label">Sets</label><input class="form-input" id="f-sets" type="text" placeholder="e.g. 3 sets"/></div>
+          <div class="form-row"><label class="form-label">Reps</label><input class="form-input" id="f-reps" type="text" placeholder="e.g. 12 reps"/></div>
+        </div>
+        <div class="form-grid2">
+          <div class="form-row"><label class="form-label">Starting weight</label><input class="form-input" id="f-weight" type="text" placeholder="e.g. 25 lb"/></div>
+          <div class="form-row"><label class="form-label">Rest</label><input class="form-input" id="f-rest" type="text" placeholder="e.g. 60s or 1:30"/></div>
+        </div>
+        <div class="form-row"><label class="form-label">Floor</label>
+          <select class="form-select" id="f-floor"><option value="top">Top floor</option><option value="bottom">Bottom floor</option></select>
+        </div>
+        <div class="form-row"><label class="form-label">Muscle groups (comma separated)</label><input class="form-input" id="f-tags" type="text" placeholder="e.g. shoulders, traps"/></div>
+        <div class="form-row"><label class="form-label">Tip (optional)</label><input class="form-input" id="f-tip" type="text" placeholder="Form cue or hypertrophy note"/></div>
+        <div class="form-row"><label class="form-label">If machine is taken (optional)</label><input class="form-input" id="f-wait" type="text" placeholder="Alternative exercise"/></div>
+        <button class="modal-save-btn" onclick="saveNewExercise()">Add to day</button>
+      </div>
+      <div id="panel-copy" style="display:none">
+        <div class="copy-filter-row">
+          <select class="copy-select" id="copy-split" onchange="renderCopyList()"><option value="">All splits</option></select>
+          <select class="copy-select" id="copy-day" onchange="renderCopyList()"><option value="">All days</option></select>
+        </div>
+        <div class="copy-ex-list" id="copy-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
